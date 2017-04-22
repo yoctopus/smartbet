@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Vincent Peter
+  ~ Licensed under the Apache License, Version 2.0 Smart Bet Tips
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/background_imageview"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@drawable/background_gradient">
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp">
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/flag_icon"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="2dp" />
+
+        <LinearLayout
+            android:id="@+id/name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/flag_icon"
+            android:layout_toRightOf="@+id/flag_icon"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/league_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/league"
+                android:textColor="@color/yellow"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/time_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="@string/time"
+                android:textColor="@color/yellow"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/versus_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/name_layout"
+            android:layout_marginTop="10dp">
+
+            <FrameLayout
+                android:id="@+id/ta_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/versus_icon"
+                android:layout_toStartOf="@+id/versus_icon"
+                android:background="@drawable/team_a_gradient">
+
+                <TextView
+                    android:id="@+id/ta_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/team_a"
+                    android:textSize="18sp" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/versus_icon"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_verses_arrows" />
+
+            <FrameLayout
+                android:id="@+id/tb_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/versus_icon"
+                android:layout_toRightOf="@+id/versus_icon"
+                android:background="@drawable/team_b_gradient">
+
+                <TextView
+                    android:id="@+id/tb_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/team_b"
+                    android:textSize="18sp" />
+            </FrameLayout>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/like_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/versus_layout"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/prediction_textview"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/prediction"
+                android:textColor="@color/yellow"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/dislike_button"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end|right"
+                        android:drawableLeft="@drawable/dislike"
+                        android:drawableStart="@drawable/dislike"
+                        android:text="@string/_0"
+                        android:textColor="@color/yellow"
+                        android:textSize="10sp"
+                        android:visibility="invisible" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/like_button"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_gravity="end|right"
+                        android:drawableLeft="@drawable/like"
+                        android:drawableStart="@drawable/like"
+                        android:text="@string/_0"
+                        android:textColor="@color/yellow"
+                        android:textSize="10sp"
+                        android:visibility="invisible" />
+                </FrameLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>
