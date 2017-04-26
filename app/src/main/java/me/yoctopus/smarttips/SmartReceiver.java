@@ -30,9 +30,6 @@ public class SmartReceiver extends BroadcastReceiver {
             Intent intent1 = new Intent(context, SmartService.class);
             intent1.setAction(CHECK_TIPS);
             context.startService(intent1);
-            
         }
-
     }
-
 }

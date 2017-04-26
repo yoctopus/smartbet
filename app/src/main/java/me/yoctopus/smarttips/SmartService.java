@@ -13,9 +13,17 @@
 
 package me.yoctopus.smarttips;
 
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
+
+import me.yoctopus.cac.notif.Notification;
+import me.yoctopus.cac.tx.Tx;
+import me.yoctopus.smarttips.m.AppDatabase;
 
 public class SmartService extends Service {
     public SmartService() {
@@ -35,23 +43,36 @@ public class SmartService extends Service {
     }
     private void checkTips() {
         FetchTips fetchTips = new FetchTips(this, 100);
-        fetchTips.setOnCompleteListener(
-                new Tx.OnCompleteListener<Tips.TipsData>() {
+        fetchTips.setOnComplete(
+                new Tx.OnComplete<Tips.TipsData>() {
                     @Override
-                    public void OnComplete(int id,
-                                           Tips.TipsData tipsData) {
+                    public void onComplete(int id, Tips.TipsData tipsData) {
                         if (tipsData == null) {
                             return;
                         }
                         if (!tipsData.getTipses().isEmpty()) {
-                            notifyTips(tipsData.getTipses().size());
+                            notifyTips(tipsData.getTipses().size(), getApplicationContext());
                         }
                     }
                 });
         fetchTips.execute();
     }
-    private void notifyTips(int size) {
-        
+    private void notifyTips(int size, Context context) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
+                R.drawable.football);
+        Intent intent = new Intent(context, SplashActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                0,
+                intent,
+                0);
+        Notification notification = new Notification(context);
+        notification.showNotification(bitmap,"SmartBet",
+                size+" tips are available",
+                R.drawable.football_logo,
+                pendingIntent);
+        Message message = new Message("New tips",
+                size + " tips are available");
+        new AppDatabase(context).save(message);
     }
 
     @Override

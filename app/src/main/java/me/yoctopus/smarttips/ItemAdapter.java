@@ -27,9 +27,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-/**
- * Created by yoctopus on 3/18/17.
- */
 
 class ItemAdapter extends Adapter<Tips> {
     private final MainActivity.OnInteractionListener listener;
@@ -40,12 +37,10 @@ class ItemAdapter extends Adapter<Tips> {
     private TextView teamB;
     private TextView prediction;
     private NetworkImageView background, flag_icon;
-
     private Button like, dislike;
     ItemAdapter(List<Tips> list,
                 MainActivity.OnInteractionListener listener) {
-        super(list,
-                R.layout.fragment_tips);
+        super(list, R.layout.fragment_tips);
         this.listener = listener;
         drawables = new ArrayList<>();
         drawables.add(R.drawable.hd2);

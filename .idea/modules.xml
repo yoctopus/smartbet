@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SmartTips.iml" filepath="$PROJECT_DIR$/SmartTips.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SmartBet.iml" filepath="$PROJECT_DIR$/SmartBet.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cac/cac.iml" filepath="$PROJECT_DIR$/cac/cac.iml" />
+      <module fileurl="file://$PROJECT_DIR$/data/data.iml" filepath="$PROJECT_DIR$/data/data.iml" />
     </modules>
   </component>
 </project>

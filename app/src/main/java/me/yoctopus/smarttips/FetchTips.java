@@ -14,149 +14,58 @@
 package me.yoctopus.smarttips;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import me.yoctopus.cac.tx.Tx;
+import me.yoctopus.smarttips.n.ServerConnect;
 
-import java.util.ArrayList;
-import java.util.Date;
-
-class FetchTips extends Tx.NetTx<Tips.TipsData> {
+class FetchTips extends Tx<Tips.TipsData, Integer> {
     private String TAG = LogUtil.makeLogTag(FetchTips.class);
-    FetchTips(Context context,
-              int id) {
-        super(context,
-                id);
+    private ServerConnect connect;
+    FetchTips(Context context, int id) {
+        super(context, id);
+        connect = new ServerConnect(context);
     }
 
     @Override
-    public OnUpdateListener<Tips.TipsData,
-            Integer> getOnUpdateListener() {
+    public Progress<Tips.TipsData, Integer> getProgress() {
         return null;
     }
 
     @Override
-    public CallBacks<Tips.TipsData,
-            Integer> getCallBacks() {
+    public CallBacks<Tips.TipsData, Integer> getCallBacks() {
         return new CallBacks<Tips.TipsData, Integer>() {
             @Override
-            public void OnStart() {
+            public void onStart() {
 
             }
 
             @Override
-            public Tips.TipsData OnExecute() {
-                LogUtil.d(TAG, "getting actions");
-                final ArrayList<Tips> tipses =
-                        new ArrayList<>();
-                String url = Address.TIPS.toString();
-                StringRequest sRequest =
-                        new StringRequest(url,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(
-                                            String response) {
-                                        LogUtil.d(TAG, "get tips successful");
-                                        JSONObject jsonObject;
-                                        JSONArray tips;
-                                        try {
-                                            jsonObject =
-                                                    new JSONObject(
-                                                            response);
-                                            tips =
-                                                    jsonObject.getJSONArray("result");
-                                            for (int i = 0; i
-                                                    < tips.length();
-                                                 i++) {
-                                                JSONObject jo =
-                                                        tips.getJSONObject(i);
-                                                Tips tips1 = new Tips();
-                                                tips1.setLeague(jo.getString("league"));
-                                                String verses = jo.getString("team");
-                                                String[] teams = verses.split("vs");
-                                                tips1.setTeamA(teams[0]);
-                                                tips1.setTeamB(teams[1]);
-                                                tips1.setPrediction(jo.getString("prediction"));
-                                                tips1.setDateTime(jo.getString("time"));
-                                        /*tips1.setTime(
-                                                new Date(Date.parse(jo.getString("time"))));
-                                                */
-                                                if (!TextUtils.isEmpty(jo.getString("flag"))) {
-                                                    tips1.setFlag_name(jo.getString("flag"));
-                                                }
-                                                long time = Long.valueOf(jo.getString("datelong"));
-                                                tips1.setTime(new Date(time));
-                                                tips1.setId(Integer.parseInt(jo.getString("ID")));
-                                                tipses.add(tips1);
-                                            }
-                                            Tips.TipsData data = new
-                                                    Tips.TipsData();
-                                            data.setTipses(
-                                                    tipses);
-                                            returnData(data);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                            LogUtil.e(TAG, "get tips error");
-                                            returnData(null);
-                                        }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        LogUtil.e(TAG, "Network error");
-                                        returnData(null);
-                                    }
-                                });
-                RequestQueue requestQueue =
-                        Volley.newRequestQueue(getContext());
-                requestQueue.add(sRequest);
-                SmartTipsApp.getInstance().addToRequestQueue(sRequest);
+            public Tips.TipsData onExecute() {
+                LogUtil.d(TAG, "getting tips");
+                connect.getTips(new me.yoctopus.json.OnComplete<List<Tips>>() {
+                    @Override
+                    public void onComplete(List<Tips> tipses) {
+                        Tips.TipsData data = new
+                                Tips.TipsData();
+                        data.setTipses(tipses);
+                        FetchTips.this.finalize(data);
+                    }
+                });
                 return null;
             }
 
             @Override
-            public void OnProgress(Integer... x) {
+            public void onProgress(Integer... x) {
 
             }
 
             @Override
-            public void OnEnd(Tips.TipsData tipsData) {
-
+            public void onEnd(Tips.TipsData tipsData) {
             }
         };
     }
-    private enum Address {
-        TIPS("results.php");
-
-        String url;
-
-        Address(String url) {
-            this.url = Address.ServerAddress.getUrl().concat(url);
-        }
 
 
-        @Override
-        public String toString() {
-            return url;
-        }
-
-
-        static class ServerAddress {
-            private static final String url =
-                    "http://greenbelemyafrica.com/";
-
-            static String getUrl() {
-                return url;
-            }
-        }
-    }
 }

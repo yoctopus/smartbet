@@ -20,15 +20,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import me.yoctopus.fastdb.Column;
+import me.yoctopus.fastdb.Model;
 import me.yoctopus.smarttips.Tips;
-import me.yoctopus.smarttips.b.Col;
-import me.yoctopus.smarttips.b.Model;
 
 
 public class TipsTable extends Model<Tips> {
     public static final String tb_name = "tps";
-    public static Col<Integer> id;
-    public static Col<String>
+    public static Column<Integer> id;
+    public static Column<String>
             league,
             teamA,
             teamB,
@@ -36,32 +36,32 @@ public class TipsTable extends Model<Tips> {
             background_url,
             dateTime,
             flag_name;
-    public static Col<Long> time;
+    public static Column<Long> time;
 
     static {
-        id = new Col<>("id",
-                Col.Type.INTEGER.PRIMARY_KEY_AUTOINCREMENT());
-        league = new Col<>("lg",
-                Col.Type.TEXT.NULLABLE(), 1);
-        teamA = new Col<>("ta",
-                Col.Type.TEXT.NOT_NULL(), 2);
-        teamB = new Col<>("tb",
-                Col.Type.TEXT.NOT_NULL(), 3);
-        prediction = new Col<>("pr",
-                Col.Type.TEXT.NOT_NULL(), 4);
-        background_url = new Col<>("br",
-                Col.Type.TEXT.NULLABLE(), 5);
-        dateTime = new Col<>("dtt",
-                Col.Type.TEXT.NOT_NULL(), 6);
-        flag_name = new Col<>("fn",
-                Col.Type.TEXT.NULLABLE(), 7);
-        time = new Col<>("tm",
-                Col.Type.INTEGER.NULLABLE(), 8);
+        id = new Column<>("id",
+                Column.Type.INTEGER.PRIMARY_KEY_AUTOINCREMENT());
+        league = new Column<>("lg",
+                Column.Type.TEXT.NULLABLE(), 1);
+        teamA = new Column<>("ta",
+                Column.Type.TEXT.NOT_NULL(), 2);
+        teamB = new Column<>("tb",
+                Column.Type.TEXT.NOT_NULL(), 3);
+        prediction = new Column<>("pr",
+                Column.Type.TEXT.NOT_NULL(), 4);
+        background_url = new Column<>("br",
+                Column.Type.TEXT.NULLABLE(), 5);
+        dateTime = new Column<>("dtt",
+                Column.Type.TEXT.NOT_NULL(), 6);
+        flag_name = new Column<>("fn",
+                Column.Type.TEXT.NULLABLE(), 7);
+        time = new Column<>("tm",
+                Column.Type.INTEGER.NULLABLE(), 8);
     }
 
     @Override
-    public List<Col> onGetColumns() {
-        List<Col> cols = new ArrayList<>();
+    public List<Column> onGetColumns() {
+        List<Column> cols = new ArrayList<>();
         cols.add(id);
         cols.add(league);
         cols.add(teamA);

@@ -14,7 +14,6 @@
 package me.yoctopus.smarttips;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,12 +21,12 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.AdListener;
@@ -40,6 +39,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import me.yoctopus.cac.notif.NDialog;
+import me.yoctopus.cac.notif.Notification;
+import me.yoctopus.cac.tx.Tx;
 import me.yoctopus.smarttips.m.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
@@ -135,38 +137,33 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            AlertDialog.Builder builder =
-                    new AlertDialog.Builder(this);
-            builder.setTitle("Network Request");
-            builder.setMessage("Please enable network " +
-                    "connection in order" +
-                    "to retrieve betting tips.");
-            builder.setPositiveButton("Enable",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(
-                                DialogInterface dialogInterface,
-                                int i) {
-                            Intent intent =
-                                    new Intent(
-                                            Settings
-                                                    .ACTION_DATA_ROAMING_SETTINGS);
-                            startActivity(
-                                    intent);
-                        }
-                    });
-            builder.show();
+            Notification notification = new Notification(this);
+            notification.showDialog("Network Request",
+                    "Please enable network " +
+                            "connection in order" +
+                            "to retrieve betting tips",
+                    new NDialog.DButton("Enable",
+                            new NDialog.DButton.BListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent =
+                                            new Intent(
+                                                    Settings
+                                                            .ACTION_DATA_ROAMING_SETTINGS);
+                                    startActivity(
+                                            intent);
+
+                                }
+                            }), null, null);
         }
     }
 
     private void loadTips() {
-        FetchTips fetchTips = new FetchTips(this,
-                100);
-        fetchTips.setOnCompleteListener(
-                new Tx.OnCompleteListener<Tips.TipsData>() {
+        FetchTips fetchTips = new FetchTips(this, 100);
+        fetchTips.setOnComplete(
+                new Tx.OnComplete<Tips.TipsData>() {
             @Override
-            public void OnComplete(int id,
-                                   Tips.TipsData tipsData) {
+            public void onComplete(int id, Tips.TipsData tipsData) {
                 if (tipsData == null) {
                     notifyNoTips();
                     return;
@@ -184,12 +181,10 @@ public class MainActivity extends AppCompatActivity {
         fetchTips.execute();
     }
     private void notifyNoTips() {
-        AlertDialog.Builder builder =
-                new AlertDialog.Builder(this);
-        builder.setTitle("Message");
-        builder.setMessage("There are no tips at the moment," +
-                "kindly check back later");
-        builder.show();
+        Notification notification = new Notification(this);
+        notification.showDialog("Message",
+                "There are no tips at the moment," +
+                        "kindly check back later", null, null, null);
     }
 
 
