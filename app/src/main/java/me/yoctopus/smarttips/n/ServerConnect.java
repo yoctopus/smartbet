@@ -18,9 +18,9 @@ import android.content.Context;
 import java.util.HashMap;
 import java.util.List;
 
+import me.yoctopus.json.Complete;
 import me.yoctopus.json.Config;
 import me.yoctopus.json.FastParser;
-import me.yoctopus.json.OnComplete;
 import me.yoctopus.smarttips.Tips;
 
 
@@ -34,7 +34,7 @@ public class ServerConnect extends FastParser {
     public ServerConnect(Context context) {
         super(Config.create(context, url));
     }
-    public void getTips(OnComplete<List<Tips>> onComplete) {
+    public void getTips(Complete<List<Tips>> onComplete) {
         loadList(onlineTips, onComplete, new HashMap<String, String>());
     }
 }

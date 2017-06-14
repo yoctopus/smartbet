@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.yoctopus.fastdb.Column;
+import me.yoctopus.fastdb.Corrupt;
 import me.yoctopus.fastdb.FastDB;
 import me.yoctopus.fastdb.Model;
-import me.yoctopus.fastdb.OnCorrupt;
 import me.yoctopus.smarttips.Message;
 import me.yoctopus.smarttips.Tips;
 
@@ -37,7 +37,7 @@ public class AppDatabase extends FastDB {
     }
     private AppDatabase(Context context,
                        String name, int version,
-                       OnCorrupt listener) {
+                       Corrupt listener) {
         super(context, name, version, listener);
     }
 
@@ -45,7 +45,7 @@ public class AppDatabase extends FastDB {
         this(context,
                 db_name,
                 version,
-                new OnCorrupt() {
+                new Corrupt() {
                     @Override
                     public void onCorrupt() {
 

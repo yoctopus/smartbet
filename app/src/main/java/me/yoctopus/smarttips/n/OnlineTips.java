@@ -29,33 +29,40 @@ import me.yoctopus.smarttips.Tips;
 public class OnlineTips extends JsonModel<Tips> {
     @Override
     public EndPoint onGetEndPoint() {
-        return new EndPoint("results", "php");
+        return new EndPoint("results", EndPoint.Type.PHP());
     }
 
+
+
     @Override
-    public Tips onLoad(JSONObject jo) throws JSONException {
+    public Tips onSet(JSONObject jo) {
         Tips tips1 = new Tips();
-        tips1.setLeague(jo.getString("league"));
-        String verses = jo.getString("team");
-        String[] teams = verses.split("vs");
-        tips1.setTeamA(teams[0]);
-        tips1.setTeamB(teams[1]);
-        tips1.setPrediction(jo.getString("prediction"));
-        tips1.setDateTime(jo.getString("time"));
+        try {
+            tips1.setLeague(jo.getString("league"));
+            String verses = jo.getString("team");
+            String[] teams = verses.split("vs");
+            tips1.setTeamA(teams[0]);
+            tips1.setTeamB(teams[1]);
+            tips1.setPrediction(jo.getString("prediction"));
+            tips1.setDateTime(jo.getString("time"));
                                         /*tips1.setTime(
                                                 new Date(Date.parse(jo.getString("time"))));
                                                 */
-        if (!TextUtils.isEmpty(jo.getString("flag"))) {
-            tips1.setFlag_name(jo.getString("flag"));
+            if (!TextUtils.isEmpty(jo.getString("flag"))) {
+                tips1.setFlag_name(jo.getString("flag"));
+            }
+            long time = Long.valueOf(jo.getString("datelong"));
+            tips1.setTime(new Date(time));
+            tips1.setId(Integer.parseInt(jo.getString("ID")));
+            return tips1;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
-        long time = Long.valueOf(jo.getString("datelong"));
-        tips1.setTime(new Date(time));
-        tips1.setId(Integer.parseInt(jo.getString("ID")));
-        return tips1;
     }
 
     @Override
-    public JSONObject onGetValues(Tips tips) {
+    public JSONObject onGet(Tips tips) {
         return null;
     }
 }
