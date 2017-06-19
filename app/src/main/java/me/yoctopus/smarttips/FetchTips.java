@@ -44,9 +44,9 @@ class FetchTips extends Tx<Tips.TipsData, Integer> {
             @Override
             public Tips.TipsData onExecute() {
                 LogUtil.d(TAG, "getting tips");
-                connect.getTips(new me.yoctopus.json.OnComplete<List<Tips>>() {
+                connect.getTips(new me.yoctopus.json.Complete<List<Tips>>() {
                     @Override
-                    public void onComplete(List<Tips> tipses) {
+                    public void complete(List<Tips> tipses) {
                         Tips.TipsData data = new
                                 Tips.TipsData();
                         data.setTipses(tipses);

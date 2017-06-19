@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import me.yoctopus.json.Config;
+
 
 class ItemAdapter extends Adapter<Tips> {
     private final MainActivity.OnInteractionListener listener;
@@ -97,16 +99,16 @@ class ItemAdapter extends Adapter<Tips> {
         int n = new Random().nextInt(drawables.size());
         imageView.setDefaultImageResId(drawables.get(n));
         imageView.setImageUrl(url,
-                SmartTipsApp.getInstance().getImageLoader());
+                Config.getInstance().getImageLoader());
 
     }
     private void loadFlag(NetworkImageView imageView, String name) {
         if (TextUtils.isEmpty(name)) {
             return;
         }
-        String url = "http://greenbelemyafrica.com/picbetting/"+name;
+        String url = "http://bait-technologies.com/projects/smartbet/picbetting/"+name;
 
         imageView.setImageUrl(url,
-                SmartTipsApp.getInstance().getImageLoader());
+                Config.getInstance().getImageLoader());
     }
 }

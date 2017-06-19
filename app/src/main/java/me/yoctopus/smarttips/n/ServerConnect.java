@@ -26,7 +26,7 @@ import me.yoctopus.smarttips.Tips;
 
 public class ServerConnect extends FastParser {
     private static final String url =
-            "http://greenbelemyafrica.com/";
+            "http://bait-technologies.com";
     private static OnlineTips onlineTips;
     static {
         onlineTips = new OnlineTips();

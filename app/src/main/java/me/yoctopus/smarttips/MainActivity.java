@@ -28,7 +28,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(WebActivity.TITLE,
                         "Eula");
                 intent.putExtra(WebActivity.URL,
-                        "http:greenbelemyafrica.com/" +
+                        "http:bait-technologies.com/" +
                                 "bet_eula.html");
                 startActivity(intent);
                 break;
@@ -261,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra(WebActivity.TITLE,
                         "Credits");
                 intent.putExtra(WebActivity.URL,
-                        "http:greenbelemyafrica.com/" +
+                        "http:bait-technologies.com/" +
                                 "bet_credits.html");
                 startActivity(intent);
                 break;

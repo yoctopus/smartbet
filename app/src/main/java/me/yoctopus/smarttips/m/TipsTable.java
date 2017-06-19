@@ -80,7 +80,7 @@ public class TipsTable extends Model<Tips> {
     }
 
     @Override
-    public Tips onLoad(Cursor cursor) {
+    public Tips onSet(Cursor cursor) {
         Tips tips = new Tips();
         tips.setId(cursor.getInt(id.getIndex()));
         tips.setLeague(cursor.getString(league.getIndex()));
@@ -95,7 +95,7 @@ public class TipsTable extends Model<Tips> {
     }
 
     @Override
-    public ContentValues onGetValues(Tips tips) {
+    public ContentValues onGet(Tips tips) {
         ContentValues values = new ContentValues();
         values.put(league.getName(), tips.getLeague());
         values.put(teamA.getName(), tips.getTeamA());
