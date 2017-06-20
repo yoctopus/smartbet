@@ -17,19 +17,61 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SplashActivity extends Activity {
+    private Timer timer;
+    private ProgressBar progressBar;
+    private int i=0;
+    TextView text_splash;
 
-    private static final int HIDE_DELAY_MILLIS = 1000;
+   // private static final int HIDE_DELAY_MILLIS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_splash);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setProgress(0);
+        text_splash=(TextView)findViewById(R.id.progressView);
+        text_splash.setText("");
+
+
+        final long period = 100;
+        timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //repeats every 100 ms
+                if (i<100){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            text_splash.setText(String.valueOf(i)+"%");
+                        }
+                    });
+                    progressBar.setProgress(i);
+                    i++;
+                }else{
+                    //closing the timer
+                    timer.cancel();
+                    Intent intent =new Intent(SplashActivity.this,MainActivity.class);
+                    startActivity(intent);
+                    // closing this activity
+                    finish();
+                }
+            }
+        }, 0, period);
+    }
    }
 
-    @Override
+
+  /*  @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         delayedStart(HIDE_DELAY_MILLIS);
@@ -47,6 +89,7 @@ public class SplashActivity extends Activity {
         };
         new Handler().postDelayed(runnable,
                 delayMillis);
+        */
 
-    }
-}
+
+

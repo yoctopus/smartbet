@@ -17,23 +17,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
+
     tools:context="me.yoctopus.smarttips.SplashActivity">
 
 
-    <TextView
-        android:text="Bet Like A Legend"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textSize="30sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="20dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:id="@+id/fl">
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:layout_width="380dp"
+            android:layout_height="380dp"
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/circle"
+            android:max="100"
+            android:progress="20"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:src="@drawable/football_splash"
+            android:id="@+id/splashimage"
+            android:layout_gravity="center"
+            android:contentDescription="@string/logo"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/green"
+            android:textSize="30sp"
+            android:id="@+id/progressView"/>
+    </FrameLayout>
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/football_splash"
-        android:id="@+id/imageView"
-        android:layout_centerInParent="true" />
+        android:text="@string/splashtag"
+        android:id="@+id/textView"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_below="@+id/fl"
+        android:textSize="30sp"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        />
+
 </RelativeLayout>

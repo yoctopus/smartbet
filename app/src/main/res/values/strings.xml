@@ -29,8 +29,10 @@
     <string name="betin">Betin</string>
     <string name="elite_bet">Elite bet</string>
     <string name="sportpesa">SportPesa</string>
+    <string name="logo">Smatbet Logo</string>
 
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="splashtag">Bet Like A Legend</string>
 </resources>

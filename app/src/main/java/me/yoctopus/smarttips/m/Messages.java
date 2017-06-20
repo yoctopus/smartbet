@@ -52,7 +52,7 @@ public class Messages extends Model<Message> {
     }
 
     @Override
-    public Message onLoad(Cursor cursor) {
+    public Message onSet(Cursor cursor) {
         Message message = new Message(cursor.getString(title.getIndex()),
                 cursor.getString(Messages.message.getIndex()),
                 cursor.getLong(date.getIndex()));
@@ -61,7 +61,7 @@ public class Messages extends Model<Message> {
     }
 
     @Override
-    public ContentValues onGetValues(Message message) {
+    public ContentValues onGet(Message message) {
         ContentValues values = new ContentValues();
         values.put(title.getName(), message.getTitle());
         values.put(Messages.message.getName(), message.getMessage());

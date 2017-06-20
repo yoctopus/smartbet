@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+import me.yoctopus.json.DynamicEndpoint;
 import me.yoctopus.json.EndPoint;
 import me.yoctopus.json.JsonModel;
 import me.yoctopus.smarttips.Tips;
@@ -29,7 +30,29 @@ import me.yoctopus.smarttips.Tips;
 public class OnlineTips extends JsonModel<Tips> {
     @Override
     public EndPoint onGetEndPoint() {
-        return new EndPoint("results", EndPoint.Type.PHP());
+        DynamicEndpoint endpoint = new DynamicEndpoint() {
+            @Override
+            public EndPoint readEndpoint() {
+                return new EndPoint("results", EndPoint.Type.PHP());
+            }
+
+            @Override
+            public EndPoint saveEndpoint() {
+                return null;
+            }
+
+            @Override
+            public EndPoint updateEndpoint() {
+                return null;
+            }
+
+            @Override
+            public EndPoint deleteEndpoint() {
+                return null;
+            }
+        };
+        endpoint.setReadArrayName("result");
+        return endpoint;
     }
 
 
