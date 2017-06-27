@@ -27,10 +27,10 @@ public class EndPoint {
         }
 
         public static Type PHP() {
-            return new Type(".php");
+            return new Type("php");
         }
         public static Type GO() {
-            return new Type(".go");
+            return new Type("go");
         }
         public static Type REST() {
             return new Type("");

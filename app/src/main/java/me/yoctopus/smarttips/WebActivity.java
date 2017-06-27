@@ -31,26 +31,26 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 
+import me.yoctopus.cac.util.LogUtil;
 
 
 public class WebActivity extends AppCompatActivity {
-    private String TAG =
-            LogUtil.makeLogTag(WebActivity.class);
-    private Handler handler = new Handler();
     static final String URL = "url";
     static final String TITLE = "title";
     static final String USER_CONSENT = "consent";
     static final String SHARE = "share";
-    private String content;
-
-    private boolean hasShare = false;
-    private String url;
     WebView webView;
-
     AdView bottomAd;
     Button acceptButton;
     Button rejectButton;
+    private String TAG =
+            LogUtil.makeTag(WebActivity.class);
+    private Handler handler = new Handler();
+    private String content;
+    private boolean hasShare = false;
+    private String url;
     private InterstitialAd interstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,8 +77,7 @@ public class WebActivity extends AppCompatActivity {
         if (intent.hasExtra(URL)) {
             this.url = intent.getStringExtra(URL);
             LogUtil.i(TAG, url);
-        }
-        else {
+        } else {
             LogUtil.e(TAG,
                     "no url passed");
             finish();
@@ -146,10 +145,10 @@ public class WebActivity extends AppCompatActivity {
             case R.id.action_eula: {
                 break;
             }
-            case R.id.action_credits:{
+            case R.id.action_credits: {
                 break;
             }
-            case android.R.id.home : {
+            case android.R.id.home: {
                 finish();
             }
         }
@@ -177,6 +176,7 @@ public class WebActivity extends AppCompatActivity {
         });
         return interstitialAd;
     }
+
     private void loadInterstitial() {
         AdRequest adRequest =
                 new AdRequest.Builder()
@@ -193,7 +193,6 @@ public class WebActivity extends AppCompatActivity {
         }
         super.onPause();
     }
-
 
 
     @Override
@@ -223,11 +222,13 @@ public class WebActivity extends AppCompatActivity {
         handler.post(runnable);
 
     }
+
     @SuppressLint("SetJavaScriptEnabled")
     private void loadSite(String url) {
         webView.loadUrl(url);
         webView.requestFocus();
     }
+
     private class WebClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {

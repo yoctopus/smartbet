@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,12 +37,14 @@ import com.google.android.gms.ads.InterstitialAd;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import me.yoctopus.cac.notif.NDialog;
 import me.yoctopus.cac.notif.Notification;
-import me.yoctopus.cac.tx.Tx;
+import me.yoctopus.json.Complete;
 import me.yoctopus.smarttips.m.AppDatabase;
+import me.yoctopus.smarttips.n.ServerConnect;
 
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -111,11 +114,12 @@ public class MainActivity extends AppCompatActivity {
         listener = new OnInteractionListener() {
             @Override
             public void onLike(Tips tips) {
+                //TODO
             }
 
             @Override
             public void onDislike(Tips tips) {
-
+                //TODO
             }
         };
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -153,37 +157,34 @@ public class MainActivity extends AppCompatActivity {
                                             intent);
 
                                 }
-                            }), null, null);
+                            }),
+                    null,
+                    null);
         }
     }
 
     private void loadTips() {
-        FetchTips fetchTips = new FetchTips(this, 100);
-        fetchTips.setOnComplete(
-                new Tx.OnComplete<Tips.TipsData>() {
+        ServerConnect connect = new ServerConnect(this);
+        connect.getTips(new Complete<List<Tips>>() {
             @Override
-            public void onComplete(int id, Tips.TipsData tipsData) {
-                if (tipsData == null) {
+            public void complete(List<Tips> tipses) {
+                if (tipses == null || tipses.isEmpty()) {
                     notifyNoTips();
                     return;
                 }
-                if (!tipsData.getTipses().isEmpty()) {
-                    listTips(new ArrayList<>(
-                            tipsData.getTipses()));
-                }
-                else {
-                    notifyNoTips();
-                }
+                listTips(new ArrayList<>(tipses));
                 refreshLayout.setRefreshing(false);
             }
         });
-        fetchTips.execute();
     }
+
     private void notifyNoTips() {
         Notification notification = new Notification(this);
         notification.showDialog("Message",
-                "There are no tips at the moment," +
-                        "kindly check back later", null, null, null);
+                "There are no tips at the moment, kindly check back later",
+                null,
+                null,
+                null);
     }
 
 

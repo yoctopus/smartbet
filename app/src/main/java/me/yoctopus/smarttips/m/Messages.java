@@ -24,18 +24,19 @@ import me.yoctopus.fastdb.Model;
 import me.yoctopus.smarttips.Message;
 
 
-
 public class Messages extends Model<Message> {
     private static final String tb_name = "msg";
     public static Column<Integer> id;
     public static Column<String> title, message;
     public static Column<Long> date;
+
     static {
         id = new Column<>("id", Column.Type.INTEGER.PRIMARY_KEY_AUTOINCREMENT());
         title = new Column<>("tt", Column.Type.TEXT.NOT_NULL(), 1);
         message = new Column<>("mm", Column.Type.TEXT.NOT_NULL(), 2);
-        date = new Column<>("dd", Column.Type.REAL.NULLABLE(), 3);
+        date = new Column<>("dd", Column.Type.INTEGER.NULLABLE(), 3);
     }
+
     @Override
     public List<Column> onGetColumns() {
         List<Column> columns = new ArrayList<>();

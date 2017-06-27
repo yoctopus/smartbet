@@ -31,13 +31,15 @@ public class AppDatabase extends FastDB {
     private static final String db_name = "db";
     private static TipsTable tipsTable;
     private static Messages messages;
+
     static {
         tipsTable = new TipsTable();
         messages = new Messages();
     }
+
     private AppDatabase(Context context,
-                       String name, int version,
-                       Corrupt listener) {
+                        String name, int version,
+                        Corrupt listener) {
         super(context, name, version, listener);
     }
 
@@ -65,47 +67,59 @@ public class AppDatabase extends FastDB {
         models.add(messages);
         return models;
     }
+
     public boolean save(Tips tips) {
         return save(tips, tipsTable);
     }
+
     public boolean save(Message message) {
         return save(message, messages);
     }
+
     public List<Tips> getTips() {
         return loadList(tipsTable);
     }
+
     public List<Message> getMessages() {
         return loadList(messages);
     }
+
     public boolean update(Tips tips) {
         Column<Integer> col = TipsTable.id;
         col.set(tips.getId());
         return update(tips, tipsTable, col);
     }
+
     public boolean update(Message message) {
         Column<Integer> col = Messages.id;
         col.set(message.getId());
         return update(message, messages, col);
     }
+
     public boolean saveTips(List<Tips> list) {
         return save(list, tipsTable);
     }
+
     public boolean saveMessages(List<Message> list) {
         return save(list, messages);
     }
+
     public boolean delete(Tips tips) {
         Column<Integer> col = TipsTable.id;
         col.set(tips.getId());
         return delete(tipsTable, col);
     }
+
     public boolean delete(Message message) {
         Column<Integer> column = Messages.id;
         column.set(message.getId());
         return delete(messages, column);
     }
+
     public boolean deleteAllMessages() {
         return delete(messages);
     }
+
     public boolean deleteAllTips() {
         return delete(tipsTable);
     }

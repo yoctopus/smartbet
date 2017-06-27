@@ -18,34 +18,13 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import java.io.File;
-
 
 public class SmartTipsApp extends MultiDexApplication {
-
-
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             MultiDex.install(this);
         }
-    }
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (String file : children) {
-                if (!deleteDir(new File(dir, file))) {
-                    return false;
-                }
-            }
-        }
-        return dir.delete();
     }
 }

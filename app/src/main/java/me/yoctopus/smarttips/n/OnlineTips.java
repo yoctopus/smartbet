@@ -26,7 +26,6 @@ import me.yoctopus.json.JsonModel;
 import me.yoctopus.smarttips.Tips;
 
 
-
 public class OnlineTips extends JsonModel<Tips> {
     @Override
     public EndPoint onGetEndPoint() {
@@ -56,11 +55,11 @@ public class OnlineTips extends JsonModel<Tips> {
     }
 
 
-
     @Override
     public Tips onSet(JSONObject jo) {
-        Tips tips1 = new Tips();
+        Tips tips1 = null;
         try {
+            tips1 = new Tips();
             tips1.setLeague(jo.getString("league"));
             String verses = jo.getString("team");
             String[] teams = verses.split("vs");
@@ -80,8 +79,8 @@ public class OnlineTips extends JsonModel<Tips> {
             return tips1;
         } catch (JSONException e) {
             e.printStackTrace();
-            return null;
         }
+        return tips1;
     }
 
     @Override

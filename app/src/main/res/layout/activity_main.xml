@@ -12,44 +12,49 @@
   ~ limitations under the License.
   -->
 
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/refresh_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+    android:background="@drawable/background_pattern"
     tools:context="me.yoctopus.smarttips.MainActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <FrameLayout
+            android:id="@+id/top_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/top_layout">
+            android:layout_height="wrap_content">
+
             <com.google.android.gms.ads.AdView
                 android:id="@+id/ad_top"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/ad_unit_one"/>
+                ads:adUnitId="@string/ad_unit_one" />
         </FrameLayout>
+
         <TextView
+            android:id="@+id/date_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:id="@+id/date_textview"
+            android:layout_gravity="right|end"
             android:layout_margin="10dp"
-            android:textSize="18sp"
-            android:layout_gravity="center" />
+            android:text="Date"
+            android:textSize="18sp" />
+
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="me.yoctopus.smarttips.TipsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="me.yoctopus.smarttips.TipsFragment"
-            tools:listitem="@layout/fragment_tips"
-            android:id="@+id/list"
-            ads:layoutManager="LinearLayoutManager"/>
+            ads:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/tips_layout" />
     </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

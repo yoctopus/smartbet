@@ -20,6 +20,7 @@ import android.net.ConnectivityManager;
 
 public class SmartReceiver extends BroadcastReceiver {
     public static final String CHECK_TIPS = "check_tips";
+
     public SmartReceiver() {
     }
 

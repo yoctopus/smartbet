@@ -25,6 +25,17 @@ import java.util.List;
  */
 
 public class Tips implements Parcelable {
+    public static final Creator<Tips> CREATOR = new Creator<Tips>() {
+        @Override
+        public Tips createFromParcel(Parcel source) {
+            return new Tips(source);
+        }
+
+        @Override
+        public Tips[] newArray(int size) {
+            return new Tips[size];
+        }
+    };
     private int id;
     private String league;
     private Date time;
@@ -35,10 +46,22 @@ public class Tips implements Parcelable {
     private String dateTime;
     private String flag_name;
 
+
     public Tips() {
     }
 
-
+    protected Tips(Parcel in) {
+        this.id = in.readInt();
+        this.league = in.readString();
+        long tmpTime = in.readLong();
+        this.time = tmpTime == -1 ? null : new Date(tmpTime);
+        this.teamA = in.readString();
+        this.teamB = in.readString();
+        this.prediction = in.readString();
+        this.backgroung_url = in.readString();
+        this.dateTime = in.readString();
+        this.flag_name = in.readString();
+    }
 
     public String getLeague() {
         return league;
@@ -84,6 +107,10 @@ public class Tips implements Parcelable {
         return backgroung_url;
     }
 
+    public void setBackgroung_url(String backgroung_url) {
+        this.backgroung_url = backgroung_url;
+    }
+
     public int getId() {
         return id;
     }
@@ -96,21 +123,16 @@ public class Tips implements Parcelable {
         return dateTime;
     }
 
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
     public String getFlag_name() {
         return flag_name;
     }
 
     public void setFlag_name(String flag_name) {
         this.flag_name = flag_name;
-    }
-
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public void setBackgroung_url(String backgroung_url) {
-        this.backgroung_url = backgroung_url;
     }
 
     @Override
@@ -147,33 +169,9 @@ public class Tips implements Parcelable {
         dest.writeString(this.flag_name);
     }
 
-    protected Tips(Parcel in) {
-        this.id = in.readInt();
-        this.league = in.readString();
-        long tmpTime = in.readLong();
-        this.time = tmpTime == -1 ? null : new Date(tmpTime);
-        this.teamA = in.readString();
-        this.teamB = in.readString();
-        this.prediction = in.readString();
-        this.backgroung_url = in.readString();
-        this.dateTime = in.readString();
-        this.flag_name = in.readString();
-    }
-
-    public static final Creator<Tips> CREATOR = new Creator<Tips>() {
-        @Override
-        public Tips createFromParcel(Parcel source) {
-            return new Tips(source);
-        }
-
-        @Override
-        public Tips[] newArray(int size) {
-            return new Tips[size];
-        }
-    };
-
     public static class TipsData {
         private List<Tips> tipses;
+
         public TipsData() {
             tipses = new ArrayList<>();
         }

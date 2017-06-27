@@ -13,62 +13,101 @@
 
 package me.yoctopus.smarttips;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.support.v4.widget.ContentLoadingProgressBar;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends Activity {
+import me.yoctopus.cac.anim.Anim;
+import me.yoctopus.cac.anim.AnimDuration;
+import me.yoctopus.cac.anim.Animator;
+
+public class SplashActivity extends AppCompatActivity {
+    protected FrameLayout frame;
+    protected TextView textView;
+    TextView text_splash;
     private Timer timer;
     private ProgressBar progressBar;
-    private int i=0;
-    TextView text_splash;
-
-   // private static final int HIDE_DELAY_MILLIS = 1000;
+    private int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_splash);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        progressBar.setProgress(0);
-        text_splash=(TextView)findViewById(R.id.progressView);
-        text_splash.setText("");
-
-
-        final long period = 100;
-        timer=new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //repeats every 100 ms
-                if (i<100){
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            text_splash.setText(String.valueOf(i)+"%");
-                        }
-                    });
-                    progressBar.setProgress(i);
-                    i++;
-                }else{
-                    //closing the timer
-                    timer.cancel();
-                    Intent intent =new Intent(SplashActivity.this,MainActivity.class);
-                    startActivity(intent);
-                    // closing this activity
-                    finish();
-                }
-            }
-        }, 0, period);
+        initView();
     }
-   }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setProgress(0);
+        text_splash.setText("");
+        animateFrame();
+    }
+
+    private void animateFrame() {
+
+        new Animator(frame, Anim.Attention.pulse())
+                .addAnimDuration(AnimDuration.ofSeconds(10))
+                .addRepeating()
+                .addAnimatorListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onStartAnimator(Animator animator) {
+                        final long period = 100;
+                        timer = new Timer();
+                        timer.schedule(new TimerTask() {
+                                           @Override
+                                           public void run() {
+                                               if (i < 100) {
+                                                   runOnUiThread(new Runnable() {
+                                                       @Override
+                                                       public void run() {
+                                                           String text = String.valueOf(i).concat("%");
+                                                           text_splash.setText(text);
+                                                       }
+                                                   });
+                                                   progressBar.setProgress(i);
+                                                   i++;
+                                               } else {
+                                                   timer.cancel();
+                                                   Intent intent = new Intent(SplashActivity.this,
+                                                           MainActivity.class);
+                                                   startActivity(intent);
+                                                   finish();
+                                               }
+                                           }
+                                       },
+                                0,
+                                period);
+                    }
+
+                    @Override
+                    public void onRepeatAnimator(Animator animator) {
+
+                    }
+
+                    @Override
+                    public void onStopAnimator(Animator animator) {
+
+                    }
+                })
+                .addWaitDuration(AnimDuration.ofSecond())
+                .animate();
+    }
+
+    private void initView() {
+        progressBar = (ContentLoadingProgressBar) findViewById(R.id.progressBar);
+        frame = (FrameLayout) findViewById(R.id.fl);
+        textView = (TextView) findViewById(R.id.textView);
+        text_splash = (TextView) findViewById(R.id.progressView);
+    }
+}
 
 
   /*  @Override

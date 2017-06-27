@@ -21,9 +21,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 
+import java.util.List;
+
 import me.yoctopus.cac.notif.Notification;
-import me.yoctopus.cac.tx.Tx;
+import me.yoctopus.json.Complete;
 import me.yoctopus.smarttips.m.AppDatabase;
+import me.yoctopus.smarttips.n.ServerConnect;
 
 public class SmartService extends Service {
     public SmartService() {
@@ -34,29 +37,27 @@ public class SmartService extends Service {
                               int flags,
                               int startId) {
         switch (intent.getAction()) {
-            case SmartReceiver.CHECK_TIPS : {
+            case SmartReceiver.CHECK_TIPS: {
                 checkTips();
                 break;
             }
         }
         return START_STICKY;
     }
+
     private void checkTips() {
-        FetchTips fetchTips = new FetchTips(this, 100);
-        fetchTips.setOnComplete(
-                new Tx.OnComplete<Tips.TipsData>() {
-                    @Override
-                    public void onComplete(int id, Tips.TipsData tipsData) {
-                        if (tipsData == null) {
-                            return;
-                        }
-                        if (!tipsData.getTipses().isEmpty()) {
-                            notifyTips(tipsData.getTipses().size(), getApplicationContext());
-                        }
-                    }
-                });
-        fetchTips.execute();
+        ServerConnect connect = new ServerConnect(this);
+        connect.getTips(new Complete<List<Tips>>() {
+            @Override
+            public void complete(List<Tips> tipses) {
+                if (tipses == null || tipses.isEmpty()) {
+                    return;
+                }
+                notifyTips(tipses.size(), getApplicationContext());
+            }
+        });
     }
+
     private void notifyTips(int size, Context context) {
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),
                 R.drawable.football);
@@ -66,8 +67,8 @@ public class SmartService extends Service {
                 intent,
                 0);
         Notification notification = new Notification(context);
-        notification.showNotification(bitmap,"SmartBet",
-                size+" tips are available",
+        notification.showNotification(bitmap, "SmartBet",
+                size + " tips are available",
                 R.drawable.football_logo,
                 pendingIntent);
         Message message = new Message("New tips",

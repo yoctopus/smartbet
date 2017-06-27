@@ -15,38 +15,29 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/black_overlay">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/background_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:scaleType="fitXY" />
-    </FrameLayout>
-
-    <FrameLayout
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/background_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@drawable/background_gradient">
-
-    </FrameLayout>
+        android:background="@null"
+        android:scaleType="fitXY" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@null"
         android:paddingTop="10dp">
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/flag_icon"
             android:layout_width="15dp"
             android:layout_height="15dp"
-            android:layout_margin="2dp" />
+            android:layout_margin="2dp"
+            android:background="@null" />
 
         <LinearLayout
             android:id="@+id/name_layout"
@@ -54,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/flag_icon"
             android:layout_toRightOf="@+id/flag_icon"
+            android:background="@null"
             android:orientation="horizontal">
 
             <TextView
@@ -61,9 +53,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@null"
                 android:gravity="center_horizontal"
                 android:text="@string/league"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent"
                 android:textSize="15sp" />
 
             <TextView
@@ -71,9 +64,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:background="@null"
                 android:gravity="center_horizontal"
                 android:text="@string/time"
-                android:textColor="@color/yellow"
+                android:textColor="@color/colorAccent"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -82,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/name_layout"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:background="@null">
 
             <FrameLayout
                 android:id="@+id/ta_layout"
@@ -109,6 +104,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="10dp"
+                android:background="@color/black_overlay"
                 app:srcCompat="@drawable/ic_verses_arrows" />
 
             <FrameLayout
@@ -131,70 +127,70 @@
         </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/like_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/versus_layout"
+            android:background="@null"
             android:orientation="horizontal"
             android:visibility="visible">
 
             <TextView
                 android:id="@+id/prediction_textview"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="@null"
                 android:gravity="center"
                 android:text="@string/prediction"
-                android:textColor="@color/yellow"
-                android:textSize="15sp" />
+                android:textColor="@color/colorAccent" />
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/button_layout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:orientation="horizontal"
+                android:padding="5dp">
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                <Button
+                    android:id="@+id/like_button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end|right"
+                    android:layout_weight="1"
+                    android:background="@color/background"
+                    android:drawableLeft="@drawable/like"
+                    android:drawableStart="@drawable/like"
+                    android:text="@string/_0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="10sp"
+                    android:visibility="invisible" />
 
-                    <Button
-                        android:id="@+id/dislike_button"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end|right"
-                        android:drawableLeft="@drawable/dislike"
-                        android:drawableStart="@drawable/dislike"
-                        android:text="@string/_0"
-                        android:textColor="@color/yellow"
-                        android:textSize="10sp"
-                        android:visibility="invisible" />
-                </FrameLayout>
+                <Button
+                    android:id="@+id/dislike_button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="end|right"
+                    android:layout_weight="1"
+                    android:background="@color/background"
+                    android:drawableLeft="@drawable/dislike"
+                    android:drawableStart="@drawable/dislike"
+                    android:text="@string/_0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="10sp"
+                    android:visibility="invisible" />
 
-                <FrameLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <Button
-                        android:id="@+id/like_button"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_gravity="end|right"
-                        android:drawableLeft="@drawable/like"
-                        android:drawableStart="@drawable/like"
-                        android:text="@string/_0"
-                        android:textColor="@color/yellow"
-                        android:textSize="10sp"
-                        android:visibility="invisible" />
-                </FrameLayout>
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>

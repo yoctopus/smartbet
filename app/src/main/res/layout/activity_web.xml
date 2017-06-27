@@ -13,80 +13,87 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_web"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_pattern"
     android:orientation="vertical"
     tools:context=".WebActivity">
+
     <RelativeLayout
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/content_layout"
-        android:layout_above="@+id/button_layout">
+        android:layout_above="@+id/button_layout"
+        android:background="@null">
 
 
         <WebView
+            android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@null"
-            android:id="@+id/web_view"
+            android:layout_above="@+id/bottom_layout"
 
-            android:layout_above="@+id/bottom_layout">
+            android:background="@null">
 
         </WebView>
 
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
             android:id="@+id/bottom_layout"
-            android:layout_alignParentBottom="true">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@null">
+
             <com.google.android.gms.ads.AdView
                 android:id="@+id/ad_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 ads:adSize="BANNER"
-                ads:adUnitId="@string/ad_unit_two"/>
+                ads:adUnitId="@string/ad_unit_two" />
 
         </FrameLayout>
 
     </RelativeLayout>
 
 
-
     <RelativeLayout
+        android:id="@+id/button_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button_layout"
 
+        android:layout_alignParentBottom="true"
         android:layout_margin="5dp"
-        android:visibility="visible"
-        android:layout_alignParentBottom="true">
+        android:background="@color/black_overlay"
+        android:visibility="visible">
 
         <Button
-            android:text="Reject"
+            android:id="@+id/reject_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/reject_button"
-            android:layout_toLeftOf="@+id/accept_button"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:textColor="@android:color/white"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/accept_button"
+            android:background="@null"
+            android:text="Reject"
+            android:textColor="@android:color/white"
             android:visibility="gone" />
 
         <Button
-            android:text="Accept"
+            android:id="@+id/accept_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/accept_button"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="false"
             android:layout_alignParentRight="true"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:background="@color/colorAccent"
-            android:textColor="@color/black"
+            android:background="@null"
+            android:text="Accept"
+            android:textColor="@android:color/white"
             android:visibility="gone" />
     </RelativeLayout>
 

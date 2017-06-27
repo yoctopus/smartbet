@@ -23,18 +23,19 @@ import me.yoctopus.json.Config;
 import me.yoctopus.json.FastParser;
 import me.yoctopus.smarttips.Tips;
 
-
 public class ServerConnect extends FastParser {
-    private static final String url =
-            "http://bait-technologies.com";
+    private static final String url = "http://bait-technologies.com";
     private static OnlineTips onlineTips;
+
     static {
         onlineTips = new OnlineTips();
     }
+
     public ServerConnect(Context context) {
         super(Config.create(context, url));
     }
-    public void getTips(Complete<List<Tips>> onComplete) {
-        loadList(onlineTips, onComplete, new HashMap<String, String>());
+
+    public void getTips(Complete<List<Tips>> complete) {
+        loadList(onlineTips, complete, new HashMap<String, String>());
     }
 }
