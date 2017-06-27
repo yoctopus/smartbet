@@ -32,17 +32,17 @@
         <android.support.v4.widget.ContentLoadingProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="380dp"
-            android:layout_height="380dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:indeterminateDrawable="@drawable/circle"
             android:max="100"
-            android:progress="20" />
+            android:progress="15" />
 
         <ImageView
             android:id="@+id/splashimage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_gravity="center"
             android:contentDescription="@string/logo"
             android:src="@drawable/football_splash" />
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/green"
-            android:textSize="30sp" />
+            android:textSize="20sp" />
     </FrameLayout>
 
     <TextView
@@ -64,15 +64,15 @@
         android:layout_centerHorizontal="false"
         android:background="@color/black_overlay"
         android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:scaleX="1.3"
-        android:shadowColor="@android:color/black"
+        android:padding="5dp"
+        android:scaleX="2"
+        android:shadowColor="@color/colorAccent"
         android:shadowDx="2"
         android:shadowDy="1.5"
         android:shadowRadius="5"
         android:text="@string/splashtag"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="15sp"
         android:textStyle="italic" />
 
 </RelativeLayout>

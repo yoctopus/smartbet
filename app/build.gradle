@@ -12,10 +12,14 @@
  */
 
 apply plugin: 'com.android.application'
+apply from: "../artifacts.gradle"
+
+group = 'me.yoctopus'
+description = 'SmartBet'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion '25.0.3'
     defaultConfig {
         applicationId "me.yoctopus.smarttips"
         minSdkVersion 15
@@ -23,6 +27,7 @@ android {
         versionCode 4
         versionName "1.3"
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -38,8 +43,9 @@ android {
     aaptOptions {
         cruncherEnabled = false
     }
-
 }
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:25.1.0'
@@ -50,4 +56,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile project(path: ':cac')
     compile project(path: ':persistence')
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
 }

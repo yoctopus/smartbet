@@ -30,6 +30,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
+import me.yoctopus.cac.anim.Anim;
+import me.yoctopus.cac.anim.AnimDuration;
+import me.yoctopus.cac.anim.Animator;
 import me.yoctopus.json.Config;
 
 
@@ -52,6 +55,10 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         holder.bind(tipses.get(position));
+        new Animator(holder.itemView, Anim.Slide.slideInDown())
+                .addAnimDuration(AnimDuration.standard())
+                .addWaitDuration(AnimDuration.noDuration())
+                .animate();
     }
 
     @Override
@@ -60,7 +67,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
     }
 
     class Holder extends RecyclerView.ViewHolder {
-        private ArrayList<Integer> drawables;
+
         private TextView league;
         private TextView time;
         private TextView teamA;
@@ -71,10 +78,7 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
 
         public Holder(View parent) {
             super(parent);
-            drawables = new ArrayList<>();
-            drawables.add(R.drawable.hd2);
-            drawables.add(R.drawable.hd3);
-            drawables.add(R.drawable.hd4);
+
             league = (TextView) parent.findViewById(R.id.league_textview);
             time = (TextView) parent.findViewById(R.id.time_textview);
             teamA = (TextView) parent.findViewById(R.id.ta_textview);
@@ -91,10 +95,8 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
             teamB.setText(tips.getTeamB());
             teamA.setText(tips.getTeamA());
             time.setText(tips.getDateTime());
-            time.setText(getTime(tips.getTime()));
+            //time.setText(getTime(tips.getTime()));
             league.setText(tips.getLeague());
-            loadBackground(background,
-                    tips.getBackgroung_url());
             like.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
@@ -118,14 +120,6 @@ class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.Holder> {
                     .format(date);
         }
 
-        private void loadBackground(NetworkImageView imageView,
-                                    String url) {
-            int n = new Random().nextInt(drawables.size());
-            imageView.setDefaultImageResId(drawables.get(n));
-            imageView.setImageUrl(url,
-                    Config.getInstance().getImageLoader());
-
-        }
 
         private void loadFlag(NetworkImageView imageView, String name) {
             if (TextUtils.isEmpty(name)) {

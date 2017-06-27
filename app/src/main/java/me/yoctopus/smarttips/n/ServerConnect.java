@@ -24,7 +24,7 @@ import me.yoctopus.json.FastParser;
 import me.yoctopus.smarttips.Tips;
 
 public class ServerConnect extends FastParser {
-    private static final String url = "http://bait-technologies.com";
+    private static final String url = "http://bait-technologies.com/";
     private static OnlineTips onlineTips;
 
     static {

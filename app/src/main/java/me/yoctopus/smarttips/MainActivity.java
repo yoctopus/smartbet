@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -43,15 +44,17 @@ import java.util.Locale;
 import me.yoctopus.cac.notif.NDialog;
 import me.yoctopus.cac.notif.Notification;
 import me.yoctopus.json.Complete;
+import me.yoctopus.json.Config;
 import me.yoctopus.smarttips.m.AppDatabase;
 import me.yoctopus.smarttips.n.ServerConnect;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
-    SwipeRefreshLayout refreshLayout;
-    TextView date;
+    protected NetworkImageView backgroundImage;
+    protected AdView adTop;
+    protected TextView dateTextview;
+    protected RecyclerView list;
+    protected SwipeRefreshLayout refreshList;
     InterstitialAd mInterstitialAd;
-    AdView topAd;
     AppDatabase database;
     private OnInteractionListener listener;
     private ItemAdapter adapter;
@@ -60,31 +63,28 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayUseLogoEnabled(true);
             getSupportActionBar().setLogo(R.drawable.football_logo);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        recyclerView = (RecyclerView)
-                findViewById(R.id.list);
-        refreshLayout = (SwipeRefreshLayout)
-                findViewById(R.id.refresh_list);
-        refreshLayout.setOnRefreshListener(
+
+        refreshList.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         loadTips();
                     }
                 });
-        date = (TextView)
+        dateTextview = (TextView)
                 findViewById(R.id.date_textview);
-        recyclerView.setLayoutManager(
+        list.setLayoutManager(
                 new LinearLayoutManager(this));
-        date.setText(new SimpleDateFormat("MMM" +
+        dateTextview.setText(new SimpleDateFormat("MMM" +
                 " dd",
                 Locale.getDefault())
                 .format(new Date()));
-        topAd = (AdView) findViewById(R.id.ad_top);
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId(
                 getResources().getString(
@@ -99,13 +99,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         database = new AppDatabase(this);
+
     }
 
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mInterstitialAd.loadAd(adRequest);
-        topAd.loadAd(adRequest);
+        adTop.loadAd(adRequest);
     }
 
     @Override
@@ -125,20 +126,25 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(
                         Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo =
-                connMgr.getActiveNetworkInfo();
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null &&
                 networkInfo.isConnected()) {
-            refreshLayout.post(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            refreshLayout.setRefreshing(
-                                    true);
-                            loadTips();
-                            requestNewInterstitial();
-                        }
-                    });
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    refreshList.postDelayed(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    refreshList.setRefreshing(
+                                            true);
+                                    loadTips();
+                                }
+                            },
+                            1000);
+                }
+            });
+
         } else {
             Notification notification = new Notification(this);
             notification.showDialog("Network Request",
@@ -163,6 +169,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void loadBackground(NetworkImageView imageView, String url) {
+
+        imageView.setImageUrl(url,
+                Config.getInstance().getImageLoader());
+    }
+
     private void loadTips() {
         ServerConnect connect = new ServerConnect(this);
         connect.getTips(new Complete<List<Tips>>() {
@@ -173,7 +185,8 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 listTips(new ArrayList<>(tipses));
-                refreshLayout.setRefreshing(false);
+                refreshList.setRefreshing(false);
+                requestNewInterstitial();
             }
         });
     }
@@ -192,14 +205,14 @@ public class MainActivity extends AppCompatActivity {
         if (adapter == null) {
             adapter = new ItemAdapter(list, listener);
         }
-        recyclerView.setAdapter(adapter);
+        MainActivity.this.list.setAdapter(adapter);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (topAd != null) {
-            topAd.resume();
+        if (adTop != null) {
+            adTop.resume();
         }
 
     }
@@ -207,16 +220,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (topAd != null) {
-            topAd.pause();
+        if (adTop != null) {
+            adTop.pause();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (topAd != null) {
-            topAd.destroy();
+        if (adTop != null) {
+            adTop.destroy();
         }
     }
 
@@ -275,6 +288,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initView() {
+        backgroundImage = (NetworkImageView) findViewById(R.id.background_image);
+        adTop = (AdView) findViewById(R.id.ad_top);
+        dateTextview = (TextView) findViewById(R.id.date_textview);
+        list = (RecyclerView) findViewById(R.id.list);
+        refreshList = (SwipeRefreshLayout) findViewById(R.id.refresh_list);
     }
 
     interface OnInteractionListener {

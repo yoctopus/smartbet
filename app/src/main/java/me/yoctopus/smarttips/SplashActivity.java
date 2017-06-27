@@ -24,10 +24,6 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import me.yoctopus.cac.anim.Anim;
-import me.yoctopus.cac.anim.AnimDuration;
-import me.yoctopus.cac.anim.Animator;
-
 public class SplashActivity extends AppCompatActivity {
     protected FrameLayout frame;
     protected TextView textView;
@@ -52,53 +48,33 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void animateFrame() {
-
-        new Animator(frame, Anim.Attention.pulse())
-                .addAnimDuration(AnimDuration.ofSeconds(10))
-                .addRepeating()
-                .addAnimatorListener(new Animator.AnimatorListener() {
+        final long period = 100;
+        timer = new Timer();
+        timer.schedule(
+                new TimerTask() {
                     @Override
-                    public void onStartAnimator(Animator animator) {
-                        final long period = 100;
-                        timer = new Timer();
-                        timer.schedule(new TimerTask() {
-                                           @Override
-                                           public void run() {
-                                               if (i < 100) {
-                                                   runOnUiThread(new Runnable() {
-                                                       @Override
-                                                       public void run() {
-                                                           String text = String.valueOf(i).concat("%");
-                                                           text_splash.setText(text);
-                                                       }
-                                                   });
-                                                   progressBar.setProgress(i);
-                                                   i++;
-                                               } else {
-                                                   timer.cancel();
-                                                   Intent intent = new Intent(SplashActivity.this,
-                                                           MainActivity.class);
-                                                   startActivity(intent);
-                                                   finish();
-                                               }
-                                           }
-                                       },
-                                0,
-                                period);
+                    public void run() {
+                        if (i < 100) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    String text = String.valueOf(i).concat("%");
+                                    text_splash.setText(text);
+                                }
+                            });
+                            progressBar.setProgress(i);
+                            i++;
+                        } else {
+                            timer.cancel();
+                            Intent intent = new Intent(SplashActivity.this,
+                                    MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
-
-                    @Override
-                    public void onRepeatAnimator(Animator animator) {
-
-                    }
-
-                    @Override
-                    public void onStopAnimator(Animator animator) {
-
-                    }
-                })
-                .addWaitDuration(AnimDuration.ofSecond())
-                .animate();
+                },
+                0,
+                period);
     }
 
     private void initView() {

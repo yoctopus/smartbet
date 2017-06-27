@@ -12,11 +12,14 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/black_overlay">
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="0dp"
+    app:cardBackgroundColor="@color/black_overlay">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/background_imageview"
@@ -162,35 +165,45 @@
                 <Button
                     android:id="@+id/like_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end|right"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@color/background"
+                    android:background="@color/black_overlay"
                     android:drawableLeft="@drawable/like"
                     android:drawableStart="@drawable/like"
+                    android:paddingEnd="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/_0"
                     android:textColor="@color/colorAccent"
                     android:textSize="10sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
                 <Button
                     android:id="@+id/dislike_button"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="end|right"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
                     android:layout_weight="1"
-                    android:background="@color/background"
+                    android:background="@color/black_overlay"
                     android:drawableLeft="@drawable/dislike"
                     android:drawableStart="@drawable/dislike"
+                    android:paddingEnd="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingStart="5dp"
                     android:text="@string/_0"
                     android:textColor="@color/colorAccent"
                     android:textSize="10sp"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
             </LinearLayout>
 
         </RelativeLayout>
     </RelativeLayout>
-</FrameLayout>
+</android.support.v7.widget.CardView>

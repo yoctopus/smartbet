@@ -28,11 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.yoctopus.utils.LogUtil;
 import me.yoctopus.utils.Te2;
 
 
 public abstract class JsonModel<T> implements Accessor<T>, Te2<T, JSONObject, JSONObject> {
     private EndPoint point = onGetEndPoint();
+
     public abstract EndPoint onGetEndPoint();
 
     private void parse(Request request) {
@@ -46,8 +48,9 @@ public abstract class JsonModel<T> implements Accessor<T>, Te2<T, JSONObject, JS
                                  final Map<String, String> map) {
         final List<T> list = new ArrayList<>();
         String url = config.getUrl(isDynamic() ?
-                        ((DynamicEndpoint) point).readEndpoint().toString() :
+                ((DynamicEndpoint) point).readEndpoint().toString() :
                 point.toString());
+        LogUtil.e("Model_url", url);
         StringRequest request =
                 new StringRequest(url,
                         new Response.Listener<String>() {
@@ -58,9 +61,7 @@ public abstract class JsonModel<T> implements Accessor<T>, Te2<T, JSONObject, JS
                                 try {
                                     jsonObject = new JSONObject(response);
                                     array = jsonObject.getJSONArray(point.getReadArrayName());
-                                    for (int i = 0; i
-                                            < array.length();
-                                         i++) {
+                                    for (int i = 0; i < array.length(); i++) {
                                         JSONObject jo = array.getJSONObject(i);
                                         T t = onSet(jo);
                                         list.add(t);
@@ -155,9 +156,9 @@ public abstract class JsonModel<T> implements Accessor<T>, Te2<T, JSONObject, JS
 
     @Override
     public void onDelete(Config config,
-                             List<T> list,
-                             final Complete complete,
-                             final Map<String, String> map) {
+                         List<T> list,
+                         final Complete complete,
+                         final Map<String, String> map) {
         JSONArray array = new JSONArray();
         for (T t : list) {
             array.put(onGet(t));
@@ -318,6 +319,7 @@ public abstract class JsonModel<T> implements Accessor<T>, Te2<T, JSONObject, JS
         parse(request);
 
     }
+
     private boolean isDynamic() {
         return point instanceof DynamicEndpoint;
     }
